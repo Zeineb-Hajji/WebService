@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deforestation Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .section {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        .section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .section a {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        .section a:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Section gauche -->
+        <div class="section">
+            <a href="dashboard.html">
+                <img src="image2.jpg" alt="Discover Your Land">
+                <span>Discover Your Land</span>
+            </a>
+        </div>
+
+        <!-- Section droite -->
+        <div class="section">
+            <a href="deforestation.html">
+                <img src="image1.jpg" alt="Deforestation Trend">
+                <span>Your Region's Deforestation Trend and Carbon Emission</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Dashboard</title>
+  <script>
+    async function analyzeLand(event) {
+      event.preventDefault(); // Prevent the form from refreshing the page
+
+      const username = document.getElementById("username").value;
+      const coordinates = document.getElementById("coordinates").value;
+
+      // Log the input to check for issues
+      console.log("Username: ", username);
+      console.log("Coordinates: ", coordinates);
+
+      try {
+        const response = await fetch("http://127.0.0.1:5000/land/boundaries", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: username,
+            boundary: {
+              type: "Polygon",
+              coordinates: JSON.parse(coordinates) // Parse the JSON string into an array
+            }
+          })
+        });
+
+        const result = await response.json();
+        console.log(result); // Log response to check
+
+        if (response.ok) {
+          alert(result.message);
+          // Open the generated map in a new tab
+          window.open(`http://127.0.0.1:5000${result.map_link}`, "_blank");
+        } else {
+          alert(result.message || "Failed to analyze land boundary");
+        }
+      } catch (error) {
+        alert("Error: " + error.message);
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Welcome to the Dashboard!</h1>
+  <p>You have successfully registered. Now you can analyze land boundaries.</p>
+
+  <form id="analyzeForm" onsubmit="analyzeLand(event)">
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username" required><br>
+
+    <label for="coordinates">Land Coordinates (GeoJSON Format):</label><br>
+    <textarea id="coordinates" name="coordinates" required rows="5" cols="50" placeholder='Enter GeoJSON coordinates'></textarea><br><br>
+
+    <button type="submit">Analyze</button>
+  </form>
+</body>
+</html>
+
+
+

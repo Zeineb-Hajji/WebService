@@ -1,0 +1,72 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Register</title>
+  <script>
+    async function registerUser(event) {
+      event.preventDefault(); // Prevent the form from refreshing the page
+
+      const username = document.getElementById("username").value;
+      const age = document.getElementById("age").value;
+      const email = document.getElementById("email").value;
+      const role = document.getElementById("role").value;
+      const password = document.getElementById("password").value;
+
+      const response = await fetch("http://127.0.0.1:5000/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: username,
+          age: age,
+          email: email,
+          role:role,
+          password: password
+        })
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert(result.message);
+        window.location.href = "acceuil.html";
+      } else {
+        alert(result.message || "Registration failed");
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Register</h1>
+  <form id="registerForm" onsubmit="registerUser(event)">
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username" required><br>
+
+    <label for="first_name">First Name:</label><br>
+    <input type="text" id="first_name" name="first_name" required><br>
+
+    <label for="last_name">Last Name:</label><br>
+    <input type="text" id="last_name" name="last_name" required><br>
+
+    <label for="age">Age:</label><br>
+    <input type="number" id="age" name="age" required><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br>
+    
+    <label for="role">Role:</label><br>
+    <input type="text" id="email" name="role" required><br>
+
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <button type="submit">Register</button>
+  </form>
+</body>
+</html>
+
+
+
