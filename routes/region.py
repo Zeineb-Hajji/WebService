@@ -1,6 +1,8 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint
-from flask import request, jsonify
+from flask import request, jsonify,send_file
+import matplotlib.pyplot as plt
+import io 
 from db import db
 from models import Region
 from schemas import RegionSchema
@@ -13,7 +15,28 @@ class RegionList(MethodView):
     def get(self):
         """Get all regions"""
         regions = Region.query.all()
-        return regions
+
+# Extract vaccine names and stock levels
+        region_names = [item.name for item in regions]
+        risk_score = [item.risk_score for item in regions]
+
+# Create the bar chart
+        plt.figure(figsize=(10, 6))
+        plt.bar(region_names,risk_score)
+        plt.xlabel('Regions_names')
+        plt.ylabel('Risk_score')
+        plt.title('REGIONS_RISKSCORE')
+        plt.xticks(rotation=45, ha="right")
+
+# Save the chart to an in-memory file
+        img = io.BytesIO()
+        plt.tight_layout()
+        plt.savefig(img, format='png')
+        img.seek(0)
+
+# Send the image as a response
+        return send_file(img, mimetype='image/png', as_attachment=False, download_name='Regionschart.png')
+
 
     @bp.arguments(RegionSchema)
     @bp.response(201, RegionSchema)

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recommendations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Recommendations</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Region ID</th>
+                <th>Threat Type</th>
+                <th>Recommendation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recommendation in recommendations %}
+            <tr>
+                <td>{{ recommendation.id }}</td>
+                <td>{{ recommendation.region_id }}</td>
+                <td>{{ recommendation.threat_type }}</td>
+                <td>{{ recommendation.recommendation }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
